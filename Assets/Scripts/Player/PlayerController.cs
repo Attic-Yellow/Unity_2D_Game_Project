@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
     {
         if (animator.GetBool("IsDead"))
         {
-            rb.gravityScale = 25f;
+            rb.gravityScale = 100f;
         }
 
         Vector2 direction = transform.up * - 3f;

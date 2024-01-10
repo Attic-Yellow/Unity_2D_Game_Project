@@ -14,7 +14,8 @@ public class GameManager : MonoBehaviour
     public int icecream;
     public int bestScore;
     public Dictionary<string, bool> ownedSnowMans = new Dictionary<string, bool>();
-    public string currentlyUsingSnowMan;
+    public Dictionary<string, bool> usingSnowMan = new Dictionary<string, bool>();
+    public StageManager stageManager;
 
     void Awake()
     {
@@ -27,6 +28,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        stageManager = FindObjectOfType<StageManager>();
 
         LoadData();
     }
@@ -46,6 +49,11 @@ public class GameManager : MonoBehaviour
         SaveData();
     }
 
+    public void AddScore(int score)
+    {
+        stageManager.IncreaseScore(score);
+    }
+
     // 최고 점수 비교 후 갱신
     public void UpdateBestScore(int newScore)
     {
@@ -63,14 +71,36 @@ public class GameManager : MonoBehaviour
 
         // 잠금 해제된 눈사람들
         string ownedSnowMansString = PlayerPrefs.GetString("OwnedSnowMans", "");
-        string[] ownedSnowMansArray = ownedSnowMansString.Split(',');
-
-        foreach (var ownedSnowMan in ownedSnowMansArray)
+        if (!string.IsNullOrEmpty(ownedSnowMansString))
         {
-            ownedSnowMans.Add(ownedSnowMan, true);
+            string[] ownedSnowMansArray = ownedSnowMansString.Split(',');
+            foreach (var ownedSnowMan in ownedSnowMansArray)
+            {
+                if (!string.IsNullOrEmpty(ownedSnowMan))
+                {
+                    ownedSnowMans.Add(ownedSnowMan, true);
+                }
+            }
+        }
+
+        // 현재 사용 중인 눈사람
+        string usingSnowManString = PlayerPrefs.GetString("UsingSnowMan", "");
+        if (!string.IsNullOrEmpty(usingSnowManString))
+        {
+            string[] usingSnowManArray = usingSnowManString.Split(',');
+            foreach (var item in usingSnowManArray)
+            {
+                if (!string.IsNullOrEmpty(item))
+                {
+                    string[] keyValue = item.Split(':');
+                    if (keyValue.Length == 2 && !string.IsNullOrEmpty(keyValue[0]))
+                    {
+                        usingSnowMan[keyValue[0]] = bool.Parse(keyValue[1]);
+                    }
+                }
+            }
         }
     }
-
 
     private void SaveData()
     {
@@ -80,6 +110,11 @@ public class GameManager : MonoBehaviour
         // 잠금 해제된 눈사람들
         string ownedSnowMansString = string.Join(",", ownedSnowMans.Keys.ToArray());
         PlayerPrefs.SetString("OwnedSnowMans", ownedSnowMansString);
+
+        // 현재 사용 중인 눈사람
+        var usingSnowManItems = usingSnowMan.Select(kv => $"{kv.Key}:{kv.Value}").ToArray();
+        string usingSnowManString = string.Join(",", usingSnowManItems);
+        PlayerPrefs.SetString("UsingSnowMan", usingSnowManString);
 
         PlayerPrefs.Save();
     }

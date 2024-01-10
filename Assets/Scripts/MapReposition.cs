@@ -6,6 +6,7 @@ public class MapReposition : MonoBehaviour
 {
     public GameObject startPrefab; // 생성할 프리팹
     public List<GameObject> randomPrefabs; // 생성할 프리팹들의 리스트
+    public GameObject icecreamPrefab;
 
     public float initialXPosition = 0f; // 초기 X 좌표
     public float xPositionIncrement = 200f; // X 좌표 증가량
@@ -26,7 +27,8 @@ public class MapReposition : MonoBehaviour
         {
             // 랜덤 프리팹 생성
             GameObject prefabToCreate = ChooseRandomPrefab();
-            CreatePrefab(prefabToCreate);
+            GameObject createdPrefab = CreatePrefab(prefabToCreate);
+            CreateIcecreamAbovePrefab(createdPrefab); // 아이스크림 생성
             yield return new WaitForSeconds(creationInterval); // 일정 시간 대기
         }
     }
@@ -44,13 +46,24 @@ public class MapReposition : MonoBehaviour
         }
     }
 
-    private void CreatePrefab(GameObject prefab)
+    private GameObject CreatePrefab(GameObject prefab)
     {
         if (prefab != null)
         {
             Vector3 creationPosition = new Vector3(currentXPosition, 0f, transform.position.z);
-            Instantiate(prefab, creationPosition, Quaternion.identity);
+            GameObject createdPrefab = Instantiate(prefab, creationPosition, Quaternion.identity);
             currentXPosition += xPositionIncrement;
+            return createdPrefab;
+        }
+        return null;
+    }
+
+    private void CreateIcecreamAbovePrefab(GameObject prefab)
+    {
+        if (prefab != null && icecreamPrefab != null)
+        {
+            Vector3 icecreamPosition = new Vector3(prefab.transform.position.x, 2f, prefab.transform.position.z);
+            Instantiate(icecreamPrefab, icecreamPosition, Quaternion.identity);
         }
     }
 }
