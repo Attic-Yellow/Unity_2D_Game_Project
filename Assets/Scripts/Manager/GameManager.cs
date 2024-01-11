@@ -29,8 +29,6 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        stageManager = FindObjectOfType<StageManager>();
-
         LoadData();
     }
 

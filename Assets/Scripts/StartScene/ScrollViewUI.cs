@@ -66,6 +66,8 @@ public class ScrollViewUI : MonoBehaviour
             snowManProfile.useButton.gameObject.SetActive(isOwned);
             snowManProfile.priceButton.gameObject.SetActive(!isOwned);
 
+            ChangeSnowMan();
+
             snowManProfile.useButton.onClick.AddListener(() =>
             {
                 // ToDo : 현재 사용중인 눈사람 변경

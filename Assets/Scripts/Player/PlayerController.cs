@@ -4,36 +4,42 @@ using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 using TMPro;
+using UnityEngine.EventSystems;
+using Cinemachine;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
     public float torqueForce;
     public TMP_Text countDownText;
+    public float savedAngularVelocity;
 
     private Rigidbody2D rb;
     private BoxCollider2D boxCollider2D;
-    private Vector3 lastVelocity;
+    private Vector2 savedVelocity;
+
     public Animator animator;
-    private OverlayManager optionsOverlay;
+    private OverlayManager overlay;
     private bool isGravityChangeStarted = false;
+    private CinemachineVirtualCamera virtualCamera;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
-        optionsOverlay = FindObjectOfType<OverlayManager>();
+        overlay = FindObjectOfType<OverlayManager>();
+        virtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
         rb.gravityScale = 0;
     }
 
     void Update()
     {
-        if (!animator.GetBool("IsDead") && !optionsOverlay.IsAnyOverlayActive() && optionsOverlay != null)
+        if (!animator.GetBool("IsDead") && !overlay.IsPauseOverlayActive())
         {
-            if (optionsOverlay != null && !isGravityChangeStarted && rb.gravityScale == 0)
+            if (!isGravityChangeStarted && rb.gravityScale == 0)
             {
-                if (Input.anyKey || Input.touchCount > 0)
+                if ((Input.anyKeyDown || Input.touchCount > 0) && !EventSystem.current.IsPointerOverGameObject())
                 {
                     StartCoroutine(ChangeGravityAfterDelay(3f));
                 }
@@ -43,14 +49,18 @@ public class PlayerController : MonoBehaviour
             if (rb.gravityScale != 0)
             {
                 HandleInput();
+                Movement();
             }
-
-            lastVelocity = rb.velocity;
-
         }
         else
         {
             StopMovement();
+        }
+
+        if (animator.GetBool("IsDead"))
+        {
+            StopMovement();
+            virtualCamera.Follow = null;
         }
     }
 
@@ -58,7 +68,7 @@ public class PlayerController : MonoBehaviour
     {
         if (animator.GetBool("IsDead"))
         {
-            rb.gravityScale = 100f;
+            rb.gravityScale = 30f;
         }
 
         Vector2 direction = transform.up * - 3f;
@@ -93,18 +103,35 @@ public class PlayerController : MonoBehaviour
 
     void StopMovement()
     {
+        savedVelocity = rb.velocity;
+        savedAngularVelocity = rb.angularVelocity;
+
         rb.velocity = Vector2.zero;
         rb.angularVelocity = 0f;
     }
 
+    void Movement()
+    {
+        rb.angularVelocity = savedAngularVelocity;
+    }
+
     IEnumerator ChangeGravityAfterDelay(float delay)
     {
+        print("시작");
+
         isGravityChangeStarted = true;
-        countDownText.gameObject.SetActive(true);
         float timeLeft = delay;
 
         while (timeLeft > 0)
         {
+            if (overlay.IsPauseOverlayActive())
+            {
+                countDownText.gameObject.SetActive(false);
+                yield return null;
+                continue;
+            }
+
+            countDownText.gameObject.SetActive(true);
             countDownText.text = timeLeft.ToString("F0"); // 소수점 없는 단일 숫자로 표시
             yield return new WaitForSeconds(1f);
             timeLeft -= 1f;
@@ -113,12 +140,5 @@ public class PlayerController : MonoBehaviour
         countDownText.gameObject.SetActive(false);
         rb.gravityScale = 2.5f;
         isGravityChangeStarted = false;
-    }
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        float speed = lastVelocity.magnitude;
-        Vector3 direction = lastVelocity.normalized;
-        rb.velocity = direction * speed;
     }
 }

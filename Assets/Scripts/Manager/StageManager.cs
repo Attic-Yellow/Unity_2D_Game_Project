@@ -14,6 +14,12 @@ public class StageManager : MonoBehaviour
     public static event Action<int> OnScoreIncreased;
     public int score;
 
+    public void Awake()
+    {
+        score = 0;
+        GameManager.instance.stageManager = this;
+    }
+
     private void Update()
     {
         UpdateDistance();

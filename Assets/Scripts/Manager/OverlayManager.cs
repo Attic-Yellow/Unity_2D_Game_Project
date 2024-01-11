@@ -8,10 +8,10 @@ public class OverlayManager : MonoBehaviour
     public GameObject optionsOverlay;
     public GameObject shopOverlay;
     public GameObject gameOverOverlay;
+    public GameObject pauseOverlay;
 
     private void Start()
     {
-
         if(optionsOverlay != null)
         {
             optionsOverlay.SetActive(false);
@@ -25,6 +25,11 @@ public class OverlayManager : MonoBehaviour
         if(gameOverOverlay != null)
         {
             gameOverOverlay.SetActive(false);
+        }
+
+        if(pauseOverlay != null)
+        {
+            pauseOverlay.SetActive(false);
         }
     }
 
@@ -55,6 +60,7 @@ public class OverlayManager : MonoBehaviour
             optionsOverlay.SetActive(false);
         }
     }
+
     public void ToggleGameOverOverlay()
     {
         if (gameOverOverlay != null)
@@ -63,10 +69,19 @@ public class OverlayManager : MonoBehaviour
         }
     }
 
+    public void TogglePauseOverlay()
+    {
+        if (pauseOverlay != null)
+        {
+            pauseOverlay.SetActive(!pauseOverlay.activeSelf);
+        }
+    }
+
     public void ToggleBackButton()
     {
         shopOverlay.SetActive(false);
         optionsOverlay.SetActive(false);
+        pauseOverlay.SetActive(false);
     }
 
     public void ToggleGoToReTryButton()
@@ -82,5 +97,10 @@ public class OverlayManager : MonoBehaviour
     public bool IsAnyOverlayActive()
     {
         return (optionsOverlay != null && optionsOverlay.activeSelf) || (shopOverlay != null && shopOverlay.activeSelf);
+    }
+
+    public bool IsPauseOverlayActive()
+    {
+        return pauseOverlay != null && pauseOverlay.activeSelf;
     }
 }
