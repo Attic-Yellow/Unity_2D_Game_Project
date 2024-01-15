@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public float torqueForce;
     public TMP_Text countDownText;
     public float savedAngularVelocity;
+    public GameObject gameUIObject;
 
     private Rigidbody2D rb;
     private BoxCollider2D boxCollider2D;
@@ -29,7 +30,10 @@ public class PlayerController : MonoBehaviour
         boxCollider2D = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
         overlay = FindObjectOfType<OverlayManager>();
-        virtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
+        virtualCamera = FindObjectOfType<CinemachineVirtualCamera>(); 
+        gameUIObject = GameObject.Find("Game UI");
+        countDownText = gameUIObject.transform.Find("Game Start Count Down").GetComponent<TMP_Text>();
+        virtualCamera.Follow = this.transform;
         rb.gravityScale = 0;
     }
 
@@ -49,12 +53,15 @@ public class PlayerController : MonoBehaviour
             if (rb.gravityScale != 0)
             {
                 HandleInput();
-                Movement();
             }
+        }
+        else if (overlay.IsPauseOverlayActive())
+        {
+            StopMovement();
         }
         else
         {
-            StopMovement();
+            Movement();
         }
 
         if (animator.GetBool("IsDead"))
@@ -62,6 +69,8 @@ public class PlayerController : MonoBehaviour
             StopMovement();
             virtualCamera.Follow = null;
         }
+
+        SaveAngularVelocity();
     }
 
     private void FixedUpdate()
@@ -115,6 +124,11 @@ public class PlayerController : MonoBehaviour
         rb.angularVelocity = savedAngularVelocity;
     }
 
+    void SaveAngularVelocity()
+    {
+        savedAngularVelocity = rb.angularVelocity;
+    }
+
     IEnumerator ChangeGravityAfterDelay(float delay)
     {
         print("Ω√¿€");
@@ -138,7 +152,7 @@ public class PlayerController : MonoBehaviour
         }
 
         countDownText.gameObject.SetActive(false);
-        rb.gravityScale = 2.5f;
+        rb.gravityScale = 4f;
         isGravityChangeStarted = false;
     }
 }

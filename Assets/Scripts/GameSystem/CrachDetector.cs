@@ -11,8 +11,8 @@ public class CrachDetector : MonoBehaviour
 
     private void Start()
     {
-        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-        gameOverOverlay = GameObject.FindGameObjectWithTag("OverlayManager").GetComponent<OverlayManager>();
+        playerController = FindObjectOfType<PlayerController>();
+        gameOverOverlay = FindObjectOfType<OverlayManager>();
     }
 
     private void FixedUpdate()
@@ -28,7 +28,6 @@ public class CrachDetector : MonoBehaviour
         if (collision.tag == "SnowMan Body")
         {
             playerController.animator.SetBool("IsDead", true);
-            
         }
     }
 }

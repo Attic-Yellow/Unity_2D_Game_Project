@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1033230005105453140}
   m_Layer: 0
   m_Name: Snow Foreground
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -394,7 +394,7 @@ GameObject:
   - component: {fileID: 4560618729204416057}
   m_Layer: 0
   m_Name: Snow Foreground (1)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using static GameManager;
 
 public class ScrollViewUI : MonoBehaviour
 {
@@ -57,12 +58,10 @@ public class ScrollViewUI : MonoBehaviour
             var go = Instantiate(prefab, contentTrans);
             SnowManNormalProfile snowManProfile = go.GetComponent<SnowManNormalProfile>();
             snowManProfileUI.Add(go);
-            // ToDo : 보유, 미보유 상태 확인에 따른 버튼 활성화
-            // 보유 시 : Use 버튼 Active 값 True, Price 버튼 Active 값 False
 
-            string snowManName = snowManProfile.snowManName.text;
+            SnowManType snowManType = snowManProfile.snowManType;
 
-            bool isOwned = GameManager.instance.ownedSnowMans.ContainsKey(snowManName);
+            bool isOwned = GameManager.instance.ownedSnowMans.ContainsKey(snowManType);
             snowManProfile.useButton.gameObject.SetActive(isOwned);
             snowManProfile.priceButton.gameObject.SetActive(!isOwned);
 
@@ -70,34 +69,24 @@ public class ScrollViewUI : MonoBehaviour
 
             snowManProfile.useButton.onClick.AddListener(() =>
             {
-                // ToDo : 현재 사용중인 눈사람 변경
-                // 현재 사용중인 눈사람 Use 버튼 Text 상용중으로 변경 다른 눈사람 Use 버튼 Text 선택으로 변경
-                // 게임 매니저에 currentlyUsingSnowMan 업데이트
-
+                GameManager.instance.usingSnowMan[snowManProfile.snowManType] = true;
+                GameManager.instance.SelectSnowMan(snowManType);
                 ChangeUseSnowMan(snowManProfile);
                 ChangeSnowMan();
             });
 
-
             snowManProfile.priceButton.onClick.AddListener(() =>
             {
-                // 눈사람 가격 확인
                 int snowManPrice = int.Parse(snowManProfile.priceText.text);
-
-                // 사용자가 충분한 아이스크림을 가지고 있는지 확인
                 if (GameManager.instance.icecream >= snowManPrice)
                 {
-                    // 아이스크림 차감 및 눈사람 보유 상태 업데이트
                     GameManager.instance.RemoveIcecream(snowManPrice);
-                    GameManager.instance.ownedSnowMans[snowManProfile.snowManName.text] = true;
-
-                    // ToDo : Use 버튼 Active 값 True, Price 버튼 Active 값 False
-                    // Use 버튼 Text 상용중으로 변경 다른 눈사람 Use 버튼 Text 선택으로 변경
-                    // 게임 매니저에 ownedSnowMans 업데이트
-                    // 게임 매니저에 currentlyUsingSnowMan 업데이트
+                    GameManager.instance.ownedSnowMans[snowManType] = true;
+                    GameManager.instance.usingSnowMan[snowManProfile.snowManType] = true;
 
                     snowManProfile.useButton.gameObject.SetActive(true);
                     snowManProfile.priceButton.gameObject.SetActive(false);
+
                     ChangeUseSnowMan(snowManProfile);
                     ChangeSnowMan();
                 }
@@ -107,24 +96,18 @@ public class ScrollViewUI : MonoBehaviour
                     // 필요한 경우, 부족한 아이스크림을 알리는 UI 업데이트
                 }
             });
-
         }
     }
 
     public void ChangeUseSnowMan(SnowManNormalProfile snowManProfile)
     {
-        string currentSnowManName = snowManProfile.snowManName.text;
-        GameManager.instance.usingSnowMan[currentSnowManName] = true;
-
-        Debug.Log($"{currentSnowManName} to true");
-
         foreach (var otherPrefab in snowManProfileUI)
         {
             var otherProfile = otherPrefab.GetComponent<SnowManNormalProfile>();
-            if (otherProfile.snowManName.text != currentSnowManName)
+
+            if (otherProfile.snowManType != snowManProfile.snowManType)
             {
-                GameManager.instance.usingSnowMan[otherProfile.snowManName.text] = false;
-                Debug.Log($"{otherProfile.snowManName.text} to false");
+                GameManager.instance.usingSnowMan[otherProfile.snowManType] = false;
             }
         }
     }
@@ -134,14 +117,10 @@ public class ScrollViewUI : MonoBehaviour
         foreach (var otherPrefab in snowManProfileUI)
         {
             var otherProfile = otherPrefab.GetComponent<SnowManNormalProfile>();
-            string otherSnowManName = otherProfile.snowManName.text;
-            bool isCurrent = GameManager.instance.usingSnowMan.ContainsKey(otherSnowManName) && GameManager.instance.usingSnowMan[otherSnowManName];
+            SnowManType otherSnowManType = otherProfile.snowManType;
+            bool isUsing = GameManager.instance.usingSnowMan.ContainsKey(otherSnowManType) && GameManager.instance.usingSnowMan[otherSnowManType];
 
-            Debug.Log($"{otherSnowManName} is {(isCurrent ? "사용중" : "선택")}");
-
-            //otherProfile.useButton.GetComponentInChildren<TextMeshProUGUI>().text = isCurrent ? "사용중" : "선택";
-            otherProfile.useText.text = isCurrent ? "사용중" : "선택";
+            otherProfile.useText.text = isUsing ? "사용중" : "선택";
         }
-        Canvas.ForceUpdateCanvases();
     }
 }

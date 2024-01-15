@@ -4,17 +4,27 @@ using UnityEngine;
 using TMPro;
 using System.Runtime.CompilerServices;
 using System.Linq;
+using System;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    
+    public enum SnowManType
+    {
+        눈사람,
+        섬뜩한눈사람,
+        Temp,
+        // 눈사람 추가 시 여기에 추가
+    }
 
     [Header("플레이어 데이터")]
 
     public int icecream;
     public int bestScore;
-    public Dictionary<string, bool> ownedSnowMans = new Dictionary<string, bool>();
-    public Dictionary<string, bool> usingSnowMan = new Dictionary<string, bool>();
+    public Dictionary<SnowManType, bool> ownedSnowMans = new Dictionary<SnowManType, bool>();
+    public Dictionary<SnowManType, bool> usingSnowMan = new Dictionary<SnowManType, bool>();
+    public SnowManType selectedSnowManType;
     public StageManager stageManager;
 
     void Awake()
@@ -28,6 +38,9 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        
+
+        // PlayerPrefs.DeleteAll(); // 데이터 삭제용
 
         LoadData();
     }
@@ -62,6 +75,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void SelectSnowMan(SnowManType snowManType)
+    {
+        selectedSnowManType = snowManType;
+    }
+
+    // 선택된 눈사람 타입을 가져오는 메서드
+    public SnowManType GetSelectedSnowMan()
+    {
+        return selectedSnowManType;
+    }
+
     private void LoadData()
     {
         icecream = PlayerPrefs.GetInt("Icecream", 150);
@@ -76,7 +100,8 @@ public class GameManager : MonoBehaviour
             {
                 if (!string.IsNullOrEmpty(ownedSnowMan))
                 {
-                    ownedSnowMans.Add(ownedSnowMan, true);
+                    SnowManType snowManType = (SnowManType)Enum.Parse(typeof(SnowManType), ownedSnowMan);
+                    ownedSnowMans[snowManType] = true;
                 }
             }
         }
@@ -93,7 +118,8 @@ public class GameManager : MonoBehaviour
                     string[] keyValue = item.Split(':');
                     if (keyValue.Length == 2 && !string.IsNullOrEmpty(keyValue[0]))
                     {
-                        usingSnowMan[keyValue[0]] = bool.Parse(keyValue[1]);
+                        SnowManType snowManType = (SnowManType)Enum.Parse(typeof(SnowManType), keyValue[0]);
+                        usingSnowMan[snowManType] = bool.Parse(keyValue[1]);
                     }
                 }
             }
@@ -106,7 +132,7 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("BestScore", bestScore);
 
         // 잠금 해제된 눈사람들
-        string ownedSnowMansString = string.Join(",", ownedSnowMans.Keys.ToArray());
+        string ownedSnowMansString = string.Join(",", ownedSnowMans.Keys.Select(k => k.ToString()).ToArray());
         PlayerPrefs.SetString("OwnedSnowMans", ownedSnowMansString);
 
         // 현재 사용 중인 눈사람
@@ -116,4 +142,5 @@ public class GameManager : MonoBehaviour
 
         PlayerPrefs.Save();
     }
+
 }

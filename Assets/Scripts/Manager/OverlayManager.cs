@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+
 
 public class OverlayManager : MonoBehaviour
 {
@@ -9,10 +12,16 @@ public class OverlayManager : MonoBehaviour
     public GameObject shopOverlay;
     public GameObject gameOverOverlay;
     public GameObject pauseOverlay;
+    public GameObject tutorialOverlay;
+    public Toggle tutorialToggle;
+
+    public bool isTutorialEnabled = true;
 
     private void Start()
     {
-        if(optionsOverlay != null)
+        isTutorialEnabled = LoadTutorialState();
+
+        if (optionsOverlay != null)
         {
             optionsOverlay.SetActive(false);
         }
@@ -30,6 +39,16 @@ public class OverlayManager : MonoBehaviour
         if(pauseOverlay != null)
         {
             pauseOverlay.SetActive(false);
+        }
+
+        if(tutorialOverlay != null)
+        {
+            tutorialOverlay.SetActive(isTutorialEnabled);
+        }
+
+        if(tutorialToggle != null)
+        {
+            tutorialToggle.isOn = isTutorialEnabled;
         }
     }
 
@@ -77,11 +96,35 @@ public class OverlayManager : MonoBehaviour
         }
     }
 
+    public void ToggleTutorialOverlay()
+    {
+        if (tutorialOverlay != null && isTutorialEnabled == true)
+        {
+            tutorialOverlay.SetActive(true);
+        }
+    }
+
+    public void ToggleTutorialToggle(bool value)
+    {
+        isTutorialEnabled = value;
+        SaveTutorialState(value);
+        PlayerPrefs.Save();
+    }
+
     public void ToggleBackButton()
     {
         shopOverlay.SetActive(false);
         optionsOverlay.SetActive(false);
-        pauseOverlay.SetActive(false);
+
+        if (pauseOverlay != null) 
+        {
+            pauseOverlay.SetActive(false);
+        }
+
+        if(tutorialOverlay != null)
+        {
+            tutorialOverlay.SetActive(false);
+        }
     }
 
     public void ToggleGoToReTryButton()
@@ -102,5 +145,17 @@ public class OverlayManager : MonoBehaviour
     public bool IsPauseOverlayActive()
     {
         return pauseOverlay != null && pauseOverlay.activeSelf;
+    }
+
+    private void SaveTutorialState(bool state)
+    {
+        PlayerPrefs.SetInt("TutorialEnabled", state ? 1 : 0);
+        
+    }
+
+    private bool LoadTutorialState()
+    {
+        // PlayerPrefs에 저장된 값이 없을 경우 기본값으로 true를 반환합니다.
+        return PlayerPrefs.GetInt("TutorialEnabled", 1) == 1;
     }
 }

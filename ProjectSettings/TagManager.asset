@@ -9,6 +9,7 @@ TagManager:
   - OverlayManager
   - Map Conneter
   - Ground
+  - Dead Area
   layers:
   - Default
   - TransparentFX
