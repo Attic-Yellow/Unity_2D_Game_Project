@@ -10,11 +10,14 @@ TagManager:
   - Map Conneter
   - Ground
   - Dead Area
+  - RotateRight
+  - RotateLeft
+  - RotateUp
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Rotate Check
   - Water
   - UI
   - 

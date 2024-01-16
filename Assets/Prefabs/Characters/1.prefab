@@ -248,9 +248,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22a4bb13e86bafb499dc343f5c55125f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  torqueForce: 400
+  torqueForce: 80000
   countDownText: {fileID: 0}
-  savedAngularVelocity: 0
   gameUIObject: {fileID: 0}
   animator: {fileID: 431144533338174279}
 --- !u!70 &431144533338174335

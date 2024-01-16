@@ -12,12 +12,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     public float torqueForce;
     public TMP_Text countDownText;
-    public float savedAngularVelocity;
     public GameObject gameUIObject;
+    public float savedVelocityX;
+
 
     private Rigidbody2D rb;
     private BoxCollider2D boxCollider2D;
-    private Vector2 savedVelocity;
 
     public Animator animator;
     private OverlayManager overlay;
@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
         countDownText = gameUIObject.transform.Find("Game Start Count Down").GetComponent<TMP_Text>();
         virtualCamera.Follow = this.transform;
         rb.gravityScale = 0;
+        Application.targetFrameRate = 30;
     }
 
     void Update()
@@ -46,6 +47,7 @@ public class PlayerController : MonoBehaviour
                 if ((Input.anyKeyDown || Input.touchCount > 0) && !EventSystem.current.IsPointerOverGameObject())
                 {
                     StartCoroutine(ChangeGravityAfterDelay(3f));
+                    Movement();
                 }
             }
 
@@ -59,41 +61,36 @@ public class PlayerController : MonoBehaviour
         {
             StopMovement();
         }
-        else
-        {
-            Movement();
-        }
 
         if (animator.GetBool("IsDead"))
         {
             StopMovement();
             virtualCamera.Follow = null;
         }
-
-        SaveAngularVelocity();
     }
 
     private void FixedUpdate()
     {
         if (animator.GetBool("IsDead"))
         {
-            rb.gravityScale = 30f;
+            rb.gravityScale = 5f;
+            rb.velocity = new Vector2(0, 1f);
+            rb.rotation = 0f;
+            rb.angularVelocity = 0f;
         }
-
-        Vector2 direction = transform.up * - 3f;
-        Debug.DrawRay(transform.position, direction, new Color(0, 1, 1));
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 3f);
     }
 
     void HandleInput()
     {
+        float toraue = torqueForce * Time.deltaTime;
+
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
-            rb.AddTorque(torqueForce);
+            rb.AddTorque(toraue);
         }
         else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
-            rb.AddTorque(-torqueForce);
+            rb.AddTorque(-toraue);
         }
 
         if (Input.touchCount > 0)
@@ -101,32 +98,26 @@ public class PlayerController : MonoBehaviour
             Touch touch = Input.GetTouch(0);
             if (touch.position.x < Screen.width / 2)
             {
-                rb.AddTorque(torqueForce);
+                rb.AddTorque(toraue);
             }
             else if (touch.position.x > Screen.width / 2)
             {
-                rb.AddTorque(-torqueForce);
+                rb.AddTorque(-toraue);
             }
         }
     }
 
     void StopMovement()
     {
-        savedVelocity = rb.velocity;
-        savedAngularVelocity = rb.angularVelocity;
+        savedVelocityX = rb.velocity.x;
 
-        rb.velocity = Vector2.zero;
-        rb.angularVelocity = 0f;
+        rb.velocity = new Vector2(0, 1);
+        rb.gravityScale = 0;
     }
 
     void Movement()
     {
-        rb.angularVelocity = savedAngularVelocity;
-    }
-
-    void SaveAngularVelocity()
-    {
-        savedAngularVelocity = rb.angularVelocity;
+        rb.velocity = new Vector2(savedVelocityX, 0);
     }
 
     IEnumerator ChangeGravityAfterDelay(float delay)

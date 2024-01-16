@@ -4,31 +4,36 @@ using UnityEngine;
 
 public class BackgroundScrolling : MonoBehaviour
 {
-    public GameObject backgroundPrefab; // 배경 프리팹
-    public float spawnInterval = 2.0f; // 생성 간격 (초 단위)
-    public float destroyPositionX = -10.0f; // 소멸 위치 (X 좌표)
+    public GameObject cam;
+
+    [SerializeField]
+    private float parallaxEffect;
+    private float xPosition;
+    private float length;
 
     void Start()
     {
-        // 코루틴 시작
-        StartCoroutine(SpawnAndDestroyCoroutine());
+        cam = GameObject.Find("VC Follow Camera");
+
+        length = GetComponent<SpriteRenderer>().bounds.size.x;
+        xPosition = transform.position.x;
     }
 
-    IEnumerator SpawnAndDestroyCoroutine()
+    private void Update()
     {
-        while (true)
+        float distanceMoved = cam.transform.position.x * (1 - parallaxEffect);
+        float distanceToMove = cam.transform.position.x * parallaxEffect;
+
+        transform.position = new Vector3(xPosition + distanceToMove, transform.position.y);
+
+        if (distanceMoved > xPosition + length)
         {
-            // 프리팹 생성
-            GameObject spawned = Instantiate(backgroundPrefab, transform.position, Quaternion.identity);
-
-            // 다음 생성까지 대기
-            yield return new WaitForSeconds(spawnInterval);
-
-            // 생성된 오브젝트가 화면 밖으로 나가면 소멸
-            if (spawned.transform.position.x <= destroyPositionX)
-            {
-                Destroy(spawned);
-            }
+            xPosition += length;
+        }
+        else if (distanceMoved < xPosition - length)
+        {
+            xPosition -= length;
         }
     }
+
 }
