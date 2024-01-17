@@ -13,13 +13,9 @@ public class OverlayManager : MonoBehaviour
     public GameObject gameOverOverlay;
     public GameObject pauseOverlay;
     public GameObject tutorialOverlay;
-    public Toggle tutorialToggle;
-
-    public bool isTutorialEnabled = true;
 
     private void Start()
     {
-        isTutorialEnabled = LoadTutorialState();
 
         if (optionsOverlay != null)
         {
@@ -41,22 +37,17 @@ public class OverlayManager : MonoBehaviour
             pauseOverlay.SetActive(false);
         }
 
-        if(tutorialOverlay != null)
+        if (tutorialOverlay != null)
         {
-            tutorialOverlay.SetActive(isTutorialEnabled);
-        }
-
-        if(tutorialToggle != null)
-        {
-            tutorialToggle.isOn = isTutorialEnabled;
+            tutorialOverlay.SetActive(GameManager.instance.isTutorialEnabled);
         }
     }
 
+    // 옵션 오버레이를 켜고 끄는 메서드
     public void ToggleOptionsOverlay()
     {
         if(optionsOverlay != null)
         {
-            
             optionsOverlay.SetActive(!optionsOverlay.activeSelf);
         }
 
@@ -66,6 +57,7 @@ public class OverlayManager : MonoBehaviour
         }
     }
 
+    // 상점 오버레이를 켜고 끄는 메서드
     public void ToggleShopOverlay()
     {
         if (shopOverlay != null)
@@ -80,6 +72,7 @@ public class OverlayManager : MonoBehaviour
         }
     }
 
+    // 게임 오버 오버레이를 켜고 끄는 메서드
     public void ToggleGameOverOverlay()
     {
         if (gameOverOverlay != null)
@@ -88,6 +81,7 @@ public class OverlayManager : MonoBehaviour
         }
     }
 
+    // 일시정지 오버레이를 켜고 끄는 메서드
     public void TogglePauseOverlay()
     {
         if (pauseOverlay != null)
@@ -96,21 +90,16 @@ public class OverlayManager : MonoBehaviour
         }
     }
 
+    // 튜토리얼 오버레이를 켜고 끄는 메서드
     public void ToggleTutorialOverlay()
     {
-        if (tutorialOverlay != null && isTutorialEnabled == true)
+        if (tutorialOverlay != null && GameManager.instance.isTutorialEnabled == true)
         {
             tutorialOverlay.SetActive(true);
         }
     }
 
-    public void ToggleTutorialToggle(bool value)
-    {
-        isTutorialEnabled = value;
-        SaveTutorialState(value);
-        PlayerPrefs.Save();
-    }
-
+    // 뒤로가기 버튼을 눌렀을 때 모든 오버레이를 끄는 메서드
     public void ToggleBackButton()
     {
         shopOverlay.SetActive(false);
@@ -127,35 +116,32 @@ public class OverlayManager : MonoBehaviour
         }
     }
 
+    // 게임 오버 오버레이에서 다시하기 버튼을 눌렀을 때 메서드
     public void ToggleGoToReTryButton()
     {
         SceneManager.LoadScene(1);
     }
 
+    // 게임 오버 오버레이에서 메인으로 버튼을 눌렀을 때 메서드
     public void ToggleGoToIntroButton()
     {
         SceneManager.LoadScene(0);
     }
 
+    // 옵션 오버레이 또는 상점 오버레이가 활성화되어 있는지 확인하는 메서드
     public bool IsAnyOverlayActive()
     {
         return (optionsOverlay != null && optionsOverlay.activeSelf) || (shopOverlay != null && shopOverlay.activeSelf);
     }
 
+    // 일시정지 오버레이와 튜토리얼 오버레이가 활성화되어 있는지 확인하는 메서드
     public bool IsPauseOverlayActive()
     {
-        return pauseOverlay != null && pauseOverlay.activeSelf;
+        return (pauseOverlay != null && pauseOverlay.activeSelf);
     }
 
-    private void SaveTutorialState(bool state)
+    public bool IsTutorialOverlayActive()
     {
-        PlayerPrefs.SetInt("TutorialEnabled", state ? 1 : 0);
-        
-    }
-
-    private bool LoadTutorialState()
-    {
-        // PlayerPrefs에 저장된 값이 없을 경우 기본값으로 true를 반환합니다.
-        return PlayerPrefs.GetInt("TutorialEnabled", 1) == 1;
+        return (tutorialOverlay != null && tutorialOverlay.activeSelf);
     }
 }

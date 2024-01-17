@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (!animator.GetBool("IsDead") && !overlay.IsPauseOverlayActive())
+        if (!animator.GetBool("IsDead") && !overlay.IsPauseOverlayActive() && !overlay.IsTutorialOverlayActive())
         {
             Time.timeScale = 1;
 
@@ -49,7 +49,6 @@ public class PlayerController : MonoBehaviour
                 if ((Input.anyKeyDown || Input.touchCount > 0) && !EventSystem.current.IsPointerOverGameObject())
                 {
                     StartCoroutine(ChangeGravityAfterDelay(3f));
-                    
                 }
             }
 
@@ -57,12 +56,15 @@ public class PlayerController : MonoBehaviour
             if (rb.gravityScale != 0)
             {
                 HandleInput();
-                
             }
         }
         else if (overlay.IsPauseOverlayActive())
         {
             Time.timeScale = 0;
+        }
+        else if (overlay.IsTutorialOverlayActive())
+        {
+            Time.timeScale = 1;
         }
 
         if (animator.GetBool("IsDead"))

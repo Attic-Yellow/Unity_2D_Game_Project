@@ -55,6 +55,7 @@ public class ScrollViewUI : MonoBehaviour
     {
         foreach (var prefab in snowManProfilePrefab)
         {
+
             var go = Instantiate(prefab, contentTrans);
             SnowManNormalProfile snowManProfile = go.GetComponent<SnowManNormalProfile>();
             snowManProfileUI.Add(go);
@@ -69,7 +70,7 @@ public class ScrollViewUI : MonoBehaviour
 
             snowManProfile.useButton.onClick.AddListener(() =>
             {
-                GameManager.instance.usingSnowMan[snowManProfile.snowManType] = true;
+                GameManager.instance.usingSnowMan[snowManType] = true;
                 GameManager.instance.SelectSnowMan(snowManType);
                 ChangeUseSnowMan(snowManProfile);
                 ChangeSnowMan();
@@ -81,8 +82,9 @@ public class ScrollViewUI : MonoBehaviour
                 if (GameManager.instance.icecream >= snowManPrice)
                 {
                     GameManager.instance.RemoveIcecream(snowManPrice);
+                    GameManager.instance.SelectSnowMan(snowManType);
                     GameManager.instance.ownedSnowMans[snowManType] = true;
-                    GameManager.instance.usingSnowMan[snowManProfile.snowManType] = true;
+                    GameManager.instance.usingSnowMan[snowManType] = true;
 
                     snowManProfile.useButton.gameObject.SetActive(true);
                     snowManProfile.priceButton.gameObject.SetActive(false);
