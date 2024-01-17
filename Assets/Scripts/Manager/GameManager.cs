@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
         
 
         // PlayerPrefs.DeleteAll(); // 데이터 삭제용
-
+        Time.timeScale = 1;
         LoadData();
     }
 

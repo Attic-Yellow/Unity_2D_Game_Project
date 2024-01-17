@@ -3490,7 +3490,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4d6cac6ce0a85cc4a8d19e1fb0a55b0b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8a3b8f837e070c14f87f47209a1f3d9c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -28157,7 +28157,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 660685c98d5cdef4499da4422cbdf744, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 464ca50fc32a0904e98e458a2ded381a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -30556,7 +30556,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: fedb6b26b9a9e294d83223b3f08c6c28, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 89719a01f648be449904e325bd699148, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -43178,6 +43178,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shop Overlay
       objectReference: {fileID: 0}
+    - target: {fileID: 2717669051981067843, guid: 469c3a589aecc0740820ab97a9e8f001, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2717669051981067844, guid: 469c3a589aecc0740820ab97a9e8f001, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -43262,13 +43266,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2717669052629433226, guid: 469c3a589aecc0740820ab97a9e8f001, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 479293d30d4f01e4188e7b4ce3ee4d6f, type: 3}
     - target: {fileID: 2717669052629433227, guid: 469c3a589aecc0740820ab97a9e8f001, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1862710015}
     - target: {fileID: 2717669053172158455, guid: 469c3a589aecc0740820ab97a9e8f001, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 400
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 469c3a589aecc0740820ab97a9e8f001, type: 3}
@@ -43625,6 +43633,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1862710015}
+    - target: {fileID: 7855156831587346511, guid: e8f6ab30d964b6142af6b27482c81293, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 479293d30d4f01e4188e7b4ce3ee4d6f, type: 3}
     - target: {fileID: 7855156831741082128, guid: e8f6ab30d964b6142af6b27482c81293, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -43713,21 +43725,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Option Overlay
       objectReference: {fileID: 0}
-    - target: {fileID: 7855156832655576942, guid: e8f6ab30d964b6142af6b27482c81293, type: 3}
-      propertyPath: m_AnchorMax.x
+    - target: {fileID: 7855156831741082129, guid: e8f6ab30d964b6142af6b27482c81293, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7855156832655576942, guid: e8f6ab30d964b6142af6b27482c81293, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7855156832655576942, guid: e8f6ab30d964b6142af6b27482c81293, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7855156833100129244, guid: e8f6ab30d964b6142af6b27482c81293, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 7855156833100129244, guid: e8f6ab30d964b6142af6b27482c81293, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8f6ab30d964b6142af6b27482c81293, type: 3}

@@ -42,12 +42,14 @@ public class PlayerController : MonoBehaviour
     {
         if (!animator.GetBool("IsDead") && !overlay.IsPauseOverlayActive())
         {
+            Time.timeScale = 1;
+
             if (!isGravityChangeStarted && rb.gravityScale == 0)
             {
                 if ((Input.anyKeyDown || Input.touchCount > 0) && !EventSystem.current.IsPointerOverGameObject())
                 {
                     StartCoroutine(ChangeGravityAfterDelay(3f));
-                    Movement();
+                    
                 }
             }
 
@@ -55,11 +57,12 @@ public class PlayerController : MonoBehaviour
             if (rb.gravityScale != 0)
             {
                 HandleInput();
+                
             }
         }
         else if (overlay.IsPauseOverlayActive())
         {
-            StopMovement();
+            Time.timeScale = 0;
         }
 
         if (animator.GetBool("IsDead"))
@@ -109,15 +112,8 @@ public class PlayerController : MonoBehaviour
 
     void StopMovement()
     {
-        savedVelocityX = rb.velocity.x;
-
         rb.velocity = new Vector2(0, 1);
         rb.gravityScale = 0;
-    }
-
-    void Movement()
-    {
-        rb.velocity = new Vector2(savedVelocityX, 0);
     }
 
     IEnumerator ChangeGravityAfterDelay(float delay)
