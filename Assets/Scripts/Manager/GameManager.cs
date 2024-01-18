@@ -160,6 +160,13 @@ public class GameManager : MonoBehaviour
         return isHapticOn;
     }
 
+    public static void Vibrate()
+    {
+        if (instance.isHapticOn)
+        {
+            Taptic.Light();
+        }
+    }
 
     // 플레이어 데이터 불러오는 메서드
     private void LoadData()

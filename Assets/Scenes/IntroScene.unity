@@ -9834,7 +9834,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -9926,11 +9926,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 6afeebf44977acd4590dcb471bfbf928, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.6
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -21898,6 +21898,18 @@ MonoBehaviour:
     IconTexture: {fileID: 0}
     IsIconRecursive: 0
     BackgroundType: 7000
+    BackgroundTexture: {fileID: 0}
+    IsBackgroundRecursive: 0
+    IsHidden: 0
+  - Type: 0
+    Name: 
+    GameObject: {fileID: 0}
+    Ordinal: 280
+    Priority: 0
+    IconType: 4000
+    IconTexture: {fileID: 0}
+    IsIconRecursive: 0
+    BackgroundType: 4000
     BackgroundTexture: {fileID: 0}
     IsBackgroundRecursive: 0
     IsHidden: 0
@@ -42695,6 +42707,7 @@ MonoBehaviour:
   isSoundOn: 0
   isHapticOn: 0
   stageManager: {fileID: 0}
+  isFirst: 0
 --- !u!4 &2091973916
 Transform:
   m_ObjectHideFlags: 0

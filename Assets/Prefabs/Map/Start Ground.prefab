@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 124043636661929584}
   m_Layer: 0
   m_Name: Snow Foreground (2)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -405,7 +405,7 @@ GameObject:
   - component: {fileID: 1747643860993885071}
   m_Layer: 0
   m_Name: Snow Foreground (4)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -625,7 +625,7 @@ GameObject:
   - component: {fileID: 1747643861374280198}
   m_Layer: 0
   m_Name: Snow Foreground (3)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -918,7 +918,7 @@ GameObject:
   - component: {fileID: 3137322422910029590}
   m_Layer: 0
   m_Name: Last Ground
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

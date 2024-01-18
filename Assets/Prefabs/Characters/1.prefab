@@ -78,7 +78,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -50
+  m_SortingOrder: -32
   m_Sprite: {fileID: 21300000, guid: 1f6c3168d9204f041947c413cea07fec, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -248,9 +248,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22a4bb13e86bafb499dc343f5c55125f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  torqueForce: 80000
+  torqueForce: 78000
   countDownText: {fileID: 0}
   gameUIObject: {fileID: 0}
+  savedVelocityX: 0
   animator: {fileID: 431144533338174279}
 --- !u!70 &431144533338174335
 CapsuleCollider2D:
@@ -342,7 +343,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -50
+  m_SortingOrder: -32
   m_Sprite: {fileID: 21300000, guid: 51a4e7b8b9ca4f24991d8e8914200c83, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -443,7 +444,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -48
+  m_SortingOrder: -30
   m_Sprite: {fileID: 21300000, guid: eb61f1e6edb90044b81adf573e6afb23, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -554,7 +555,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -51
+  m_SortingOrder: -33
   m_Sprite: {fileID: 21300000, guid: feb2dbafea794844980dfbfbffde7a93, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -665,7 +666,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -48
+  m_SortingOrder: -30
   m_Sprite: {fileID: 21300000, guid: bf7c966ba9b4e1e4398a607fd25e0bc1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

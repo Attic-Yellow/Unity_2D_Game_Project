@@ -8,7 +8,8 @@ public class MapMaker : MonoBehaviour
     public List<GameObject> randomPrefabs; // 생성할 맵 프리팹들의 리스트
     public GameObject icecreamPrefab; // 생성할 아이스크림 프리팹
 
-    public float spawnInterval = 2f; // 맵 조각과 아이스크림이 생성되는 간격(초)
+    public float spawnInterval = 0.5f; // 맵 조각과 아이스크림이 생성되는 간격(초)
+    public float iceCreamOffsetRange = 70f;
 
     private GameObject lastPrefab;
     private GameObject ground;
@@ -69,7 +70,8 @@ public class MapMaker : MonoBehaviour
 
     void PlaceIceCream(float xPosition)
     {
-        Vector3 iceCreamPosition = new Vector3(xPosition, 1.5f, 0);
+        float randomOffset = Random.Range(-iceCreamOffsetRange, iceCreamOffsetRange);
+        Vector3 iceCreamPosition = new Vector3(xPosition + randomOffset, 1.5f, 0);
         Instantiate(icecreamPrefab, iceCreamPosition, Quaternion.identity);
     }
 }

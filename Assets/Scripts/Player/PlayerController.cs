@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     public GameObject gameUIObject;
     public float savedVelocityX;
 
+    private float inputDelay = 2.0f; // 입력을 무시할 시간 (초)
+    private float timeSinceSceneLoaded;
 
     private Rigidbody2D rb;
     private BoxCollider2D boxCollider2D;
@@ -34,12 +36,20 @@ public class PlayerController : MonoBehaviour
         gameUIObject = GameObject.Find("Game UI");
         countDownText = gameUIObject.transform.Find("Game Start Count Down").GetComponent<TMP_Text>();
         virtualCamera.Follow = this.transform;
+        timeSinceSceneLoaded = 0f; // 씬 로드 시간 초기화
         rb.gravityScale = 0;
         Application.targetFrameRate = 30;
     }
 
     void Update()
     {
+        timeSinceSceneLoaded += Time.deltaTime; // 씬 로드 후 경과 시간 갱신
+
+        if (timeSinceSceneLoaded < inputDelay)
+        {
+            return;
+        }
+
         if (!animator.GetBool("IsDead") && !overlay.IsPauseOverlayActive() && !overlay.IsTutorialOverlayActive())
         {
             Time.timeScale = 1;

@@ -46,7 +46,9 @@ public class OverlayManager : MonoBehaviour
     // 옵션 오버레이를 켜고 끄는 메서드
     public void ToggleOptionsOverlay()
     {
-        if(optionsOverlay != null)
+        GameManager.Vibrate();
+
+        if (optionsOverlay != null)
         {
             optionsOverlay.SetActive(!optionsOverlay.activeSelf);
         }
@@ -60,6 +62,8 @@ public class OverlayManager : MonoBehaviour
     // 상점 오버레이를 켜고 끄는 메서드
     public void ToggleShopOverlay()
     {
+        GameManager.Vibrate();
+
         if (shopOverlay != null)
         {
             shopOverlay.SetActive(!shopOverlay.activeSelf);
@@ -84,7 +88,9 @@ public class OverlayManager : MonoBehaviour
     // 일시정지 오버레이를 켜고 끄는 메서드
     public void TogglePauseOverlay()
     {
-        if (pauseOverlay != null)
+        GameManager.Vibrate();
+
+        if (pauseOverlay != null && gameOverOverlay.activeSelf == false)
         {
             pauseOverlay.SetActive(!pauseOverlay.activeSelf);
         }
@@ -102,6 +108,8 @@ public class OverlayManager : MonoBehaviour
     // 뒤로가기 버튼을 눌렀을 때 모든 오버레이를 끄는 메서드
     public void ToggleBackButton()
     {
+        GameManager.Vibrate();
+
         shopOverlay.SetActive(false);
         optionsOverlay.SetActive(false);
 
@@ -119,12 +127,14 @@ public class OverlayManager : MonoBehaviour
     // 게임 오버 오버레이에서 다시하기 버튼을 눌렀을 때 메서드
     public void ToggleGoToReTryButton()
     {
+        GameManager.Vibrate();
         SceneManager.LoadScene(1);
     }
 
     // 게임 오버 오버레이에서 메인으로 버튼을 눌렀을 때 메서드
     public void ToggleGoToIntroButton()
     {
+        GameManager.Vibrate();
         SceneManager.LoadScene(0);
     }
 

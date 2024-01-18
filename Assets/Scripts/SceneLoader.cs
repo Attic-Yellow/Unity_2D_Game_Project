@@ -8,6 +8,7 @@ public class SceneLoader : MonoBehaviour
 {
     private OverlayManager optionsOverlay;
 
+
     private void Start()
     {
         optionsOverlay = FindObjectOfType<OverlayManager>();
@@ -24,6 +25,7 @@ public class SceneLoader : MonoBehaviour
                 if (!EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
                 {
                     GameSceneLoad();
+                    return;
                 }
             }
             // PC 또는 기타 환경에서의 입력 체크
@@ -32,6 +34,7 @@ public class SceneLoader : MonoBehaviour
                 if (!EventSystem.current.IsPointerOverGameObject())
                 {
                     GameSceneLoad();
+                    return;
                 }
             }
         }

@@ -85,12 +85,14 @@ public class SoundManager : MonoBehaviour
     // 튜토리얼 on / off 상태를 저장하는 메서드
     public void ToggleTutorialButton(bool value)
     {
+        GameManager.Vibrate();
         GameManager.instance.SaveTutorialState(value); // GameManager를 통해 상태 저장
         isTutorialEnabled = value;
     }
 
     public void ToggleSoundButton(bool value)
     {
+        GameManager.Vibrate();
         GameManager.instance.SaveSoundState(value); // GameManager를 통해 상태 저장
         isSoundOn = value;
 
@@ -100,6 +102,7 @@ public class SoundManager : MonoBehaviour
 
     public void ToggleHapticButton(bool value)
     {
+        GameManager.Vibrate();
         GameManager.instance.SaveHapticState(value); // GameManager를 통해 상태 저장
         isHapticOn = value;
     }
