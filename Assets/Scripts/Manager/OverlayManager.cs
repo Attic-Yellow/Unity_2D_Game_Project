@@ -184,13 +184,7 @@ public class OverlayManager : MonoBehaviour
     {
         GameManager.Vibrate();
 
-        #if UNITY_ANDROID || UNITY_IOS
-        // 모바일 플랫폼에서는 애플리케이션을 백그라운드로 보냄
-        Application.runInBackground = true;
-        #else
-        // PC, 맥, 리눅스에서는 게임을 종료
         Application.Quit();
-        #endif
     }
 
     // 게임 오버 오버레이에서 다시하기 버튼을 눌렀을 때 메서드
